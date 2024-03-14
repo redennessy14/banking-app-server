@@ -1,8 +1,13 @@
 import express from "express";
 import mongoose from "mongoose";
-import { UserController } from "./controllers/index.js";
-import { registerValidation } from "./validations/validations.js";
+import { UserController, CardController } from "./controllers/index.js";
+import {
+  registerValidation,
+  loginValidation,
+  CardCreateValidation,
+} from "./validations/validations.js";
 import handleValidationErrors from "./utils/handleValidationErrors.js";
+import checkAuth from "./utils/checkAuth.js";
 
 const app = express();
 
@@ -19,7 +24,12 @@ mongoose
 
 app.use(express.json());
 
-// app.post("/auth/login");
+app.post(
+  "/auth/login",
+  loginValidation,
+  handleValidationErrors,
+  UserController.login
+);
 
 app.post(
   "/auth/register",
@@ -28,7 +38,15 @@ app.post(
   UserController.register
 );
 
-// app.post("/cards");
+app.get("/auth/me", checkAuth, UserController.getMe);
+
+app.post(
+  "/cards",
+  checkAuth,
+  CardCreateValidation,
+  handleValidationErrors,
+  CardController.create
+);
 
 app.listen(4001, (err) => {
   if (err) {

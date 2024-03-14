@@ -9,7 +9,14 @@ export const registerValidation = [
   body("avatarUrl", "Неверная ссылка на аватарку").optional().isURL(),
 ];
 
-export const CardValidation = [
+export const loginValidation = [
+  body("email", "Неверный формат почты").isEmail(),
+  body("password", "Пароль должен содержать минимум 5 символов").isLength({
+    min: 5,
+  }),
+];
+
+export const CardCreateValidation = [
   body("cardNumber")
     .isCreditCard()
     .withMessage("Неверный номер кредитной карты"),

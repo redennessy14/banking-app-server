@@ -46,7 +46,7 @@ app.post(
   CardCreateValidation,
   handleValidationErrors,
   CardController.create
-);
+ );
 
 app.listen(4001, (err) => {
   if (err) {

@@ -28,7 +28,7 @@ export const CardCreateValidation = [
     .isAfter()
     .withMessage("Неверная дата окончания действия"),
   body("cvv").isLength({ min: 3, max: 4 }).withMessage("Неверный CVV"),
-  body("balance").isNumeric().withMessage("Баланс должен быть числовым"),
+  body("balance").isNumeric().withMessagegi("Баланс должен быть числовым"),
   body("creditLimit")
     .optional()
     .isNumeric()

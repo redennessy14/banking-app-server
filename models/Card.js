@@ -3,12 +3,11 @@ import mongoose from "mongoose";
 const CardSchema = new mongoose.Schema({
   cardNumber: {
     type: String,
-    required: true,
     unique: true,
   },
   cardType: {
     type: String,
-    enum: ["Credit", "Debit", "Prepaid"],
+    enum: ["Gold", "Platinum", "Standard"],
     required: true,
   },
   cardholderName: {
@@ -16,20 +15,14 @@ const CardSchema = new mongoose.Schema({
     required: true,
   },
   expirationDate: {
-    type: Date,
-    required: true,
+    type: String,
   },
   cvv: {
     type: String,
-    required: true,
   },
   balance: {
     type: Number,
     default: 0,
-  },
-  creditLimit: {
-    type: Number,
-    default: null,
   },
   status: {
     type: String,

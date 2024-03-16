@@ -17,20 +17,14 @@ export const loginValidation = [
 ];
 
 export const CardCreateValidation = [
-  body("cardNumber")
+  body("cardNumber", "Неверный номер кредитной карты")
     .optional()
-    .isCreditCard()
-    .withMessage("Неверный номер кредитной карты"),
-  body("cardType")
-    .isIn(["Gold", "Platinum", "Standard"])
-    .withMessage("Неверный тип карты"),
-  body("cardholderName").notEmpty().withMessage("Укажите имя владельца карты"),
+    .isCreditCard(),
+  body("cardType", "Неверный тип карты").isIn(["Gold", "Platinum", "Standard"]),
+  body("cardholderName", "Укажите имя владельца карты").notEmpty(),
   body("expirationDate").optional(),
-  body("cvv")
-    .optional()
-    .isLength({ min: 3, max: 4 })
-    .withMessage("Неверный CVV"),
+  body("cvv").optional().isLength({ min: 3, max: 4 }),
   body("balance").optional(),
   body("status"),
-  body("userId").isMongoId().withMessage("Неверный идентификатор пользователя"),
+  body("userId", "Неверный идентификатор пользователя").isMongoId(),
 ];

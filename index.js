@@ -50,6 +50,8 @@ app.post(
 
 app.get("/cards", checkAuth, CardController.getMyCards);
 
+app.patch("/cards/:id", checkAuth, CardController.transfer);
+
 app.listen(4001, (err) => {
   if (err) {
     return console.log(err);

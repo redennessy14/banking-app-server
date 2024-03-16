@@ -43,10 +43,50 @@ export const getMyCards = async (req, res) => {
       .exec();
     res.json(cards);
   } catch (error) {
-    console.error("Ошибка при получении карт пользователя:", error);
+    console.error("Ошибка при получении карт пользователя", error);
     res.status(500).json({
       message: "Ошибка при получении карт пользователя",
       error: error.message,
     });
+  }
+};
+
+export const transfer = async (req, res) => {
+  try {
+    const cardId = req.params.id;
+    const recCardNumber = req.body.cardNumber;
+    const amount = req.body.amount;
+
+    const senderCard = await CardModel.findById(cardId);
+    if (!senderCard) {
+      return res
+        .status(404)
+        .json({ message: "Карточка отправителя не найдена." });
+    }
+
+    if (senderCard.balance < amount) {
+      return res
+        .status(400)
+        .json({ message: "Недостаточно средств на карте отправителя." });
+    }
+
+    const recipientCard = await CardModel.findOne({
+      cardNumber: recCardNumber,
+    });
+    if (!recipientCard) {
+      return res
+        .status(404)
+        .json({ message: "Карточка получателя не найдена." });
+    }
+
+    senderCard.balance -= amount;
+    await senderCard.save();
+
+    recipientCard.balance += amount;
+    await recipientCard.save();
+
+    res.json({ message: "Перевод успешно выполнен," });
+  } catch (error) {
+    res.status(500).json({ message: "Ошибка при выполнении перевода." });
   }
 };

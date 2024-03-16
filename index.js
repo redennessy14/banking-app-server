@@ -46,7 +46,9 @@ app.post(
   CardCreateValidation,
   handleValidationErrors,
   CardController.create
- );
+);
+
+app.get("/cards", checkAuth, CardController.getMyCards);
 
 app.listen(4001, (err) => {
   if (err) {

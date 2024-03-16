@@ -30,7 +30,7 @@ export const CardCreateValidation = [
     .optional()
     .isLength({ min: 3, max: 4 })
     .withMessage("Неверный CVV"),
-  body("balance").isNumeric().withMessage("Баланс должен быть числовым"),
+  body("balance").optional(),
   body("status"),
   body("userId").isMongoId().withMessage("Неверный идентификатор пользователя"),
 ];

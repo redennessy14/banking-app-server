@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import UserModel from "../models/User.js";
-import User from "../models/User.js";
 
 export const login = async (req, res) => {
   try {
@@ -48,6 +47,12 @@ export const login = async (req, res) => {
 
 export const register = async (req, res) => {
   try {
+    const findUser = await UserModel.findOne({ email: req.body.email });
+    if (findUser) {
+      return res.status(400).json({
+        message: "Пользователь с таким email уже существует",
+      });
+    }
     const password = req.body.password;
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
@@ -86,7 +91,7 @@ export const register = async (req, res) => {
 
 export const getMe = async (req, res) => {
   try {
-    const user = await User.findById(req.userId);
+    const user = await UserModel.findById(req.userId);
 
     if (!user) {
       return res.status(404).json({

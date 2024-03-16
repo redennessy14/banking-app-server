@@ -30,7 +30,7 @@ const CardSchema = new mongoose.Schema({
     default: "Active",
   },
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: "User",
   },
 });

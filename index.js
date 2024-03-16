@@ -5,6 +5,7 @@ import {
   registerValidation,
   loginValidation,
   CardCreateValidation,
+  CardTransferValidation,
 } from "./validations/validations.js";
 import handleValidationErrors from "./utils/handleValidationErrors.js";
 import checkAuth from "./utils/checkAuth.js";
@@ -50,7 +51,12 @@ app.post(
 
 app.get("/cards", checkAuth, CardController.getMyCards);
 
-app.patch("/cards/:id", checkAuth, CardController.transfer);
+app.patch(
+  "/cards/:id",
+  checkAuth,
+  CardTransferValidation,
+  CardController.transfer
+);
 
 app.listen(4001, (err) => {
   if (err) {

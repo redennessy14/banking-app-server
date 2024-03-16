@@ -28,3 +28,10 @@ export const CardCreateValidation = [
   body("status"),
   body("userId", "Неверный идентификатор пользователя").isMongoId(),
 ];
+
+export const CardTransferValidation = [
+  body("amount", "Укажите баланс который хотите перевести").isNumeric(),
+  body("cardNumber", "Лицевой счет должен содержать минимум 16 цифер").isLength(
+    { min: 16 }
+  ),
+];

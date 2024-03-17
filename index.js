@@ -1,6 +1,10 @@
 import express from "express";
 import mongoose from "mongoose";
-import { UserController, CardController } from "./controllers/index.js";
+import {
+  UserController,
+  CardController,
+  TransactionController,
+} from "./controllers/index.js";
 import {
   registerValidation,
   loginValidation,
@@ -50,6 +54,8 @@ app.post(
 );
 
 app.get("/cards", checkAuth, CardController.getMyCards);
+
+app.get("/transaction", TransactionController.transactionGet);
 
 app.patch(
   "/cards/:id",
